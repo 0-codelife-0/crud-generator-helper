@@ -17,6 +17,12 @@ composer require codelife/codelife-model-generator-helper:dev-main
 composer require codelife/codelife-model-generator-helper:dev-master
 ```
 
+## This helper requires this plugin to work
+```shell
+composer require doctrine/dbal
+```
+
+
 ### Load this in confgi/app.php
 
 ```php
