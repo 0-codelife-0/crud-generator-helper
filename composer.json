@@ -1,0 +1,32 @@
+{
+    "name": "codelife/codelife-model-generator-helper",
+    "description": "This is a model generator made by Jexter Tomas",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Codelife\\CodelifeModelGeneratorHelper\\": "src/",
+            "Codelife\\CodelifeModelGeneratorHelper\\Stubs\\": "src/Console/Commands/Stubs"
+        }
+    },
+    "authors": [
+        {
+            "name": "Jexter Tomas",
+            "email": "0.coding.is.life.0@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Codelife\\CodelifeModelGeneratorHelper\\Providers\\ModelHelperServiceProvider"
+            ]
+        }
+    },
+    "scripts": {
+      "test": "vendor/bin/phpunit",
+      "test-f": "vendor/bin/phpunit --filter"
+    },
+    "minimum-stability": "stable",
+    "require": {
+        "php": ">=5.5"
+    }
+}

@@ -1,0 +1,6 @@
+Route::controller(App\Http\Controllers$PREFIX$\$MODEL_CONTROLLER$Controller::class)->prefix('$ROUTE_PREFIX$$MODEL_ROUTE$')->name('$ROUTE_NAME$$MODEL_ROUTE$.')->group(function () {
+    Route::get('index', 'index')->name('index');
+    Route::match(['get', 'post'], 'add', 'add')->name('add');
+    Route::match(['get', 'post'], 'edit/{id}', 'edit')->name('edit');
+    Route::get('delete/{id}', 'delete')->name('delete');
+});

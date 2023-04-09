@@ -1,0 +1,12 @@
+@extends('layout.app')
+@section('title', 'Edit')
+@section('content')
+<form action="{{ route('$PREFIX$$MODEL_ROUTE$.edit', $data->id) }}" method="POST">
+    <a class="btn btn-default float-right" href="{{ url()->previous() }}">Back</a>
+    @csrf
+    $INPUTS$
+    <a class="btn btn-dark" href="{{ url()->previous() }}">Back</a>
+    <button type="reset" class="btn btn-danger">Reset Form</button>
+    <button type="submit" class="btn btn-success">Update</button>
+</form>
+@endsection

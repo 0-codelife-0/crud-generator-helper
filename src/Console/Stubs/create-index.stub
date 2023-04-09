@@ -1,0 +1,22 @@
+@extends('layout.app')
+@section('title', 'Table')
+@section('content')
+<a href="{{ route('$PREFIX$$ROUTE$.add') }}" class="btn btn-info float-right">Add New Data</a>
+<table class="table table-responsive table-hover">
+	<thead>
+        $HEADER$
+        <th>{{ __('Action') }}</th>
+	</thead>
+	<tbody>
+		@foreach ($datas as $data)
+			<tr>
+				$BODY$
+				<td>
+					<a href="{{ route('$PREFIX$$ROUTE$.edit', $data->id) }}" class="btn btn-warning">Edit</a>
+					<a href="{{ route('$PREFIX$$ROUTE$.delete', $data->id) }}" class="btn btn-danger">Delete</a>
+				</td>
+			</tr>
+		@endforeach
+	</tbody>
+</table>
+@endsection

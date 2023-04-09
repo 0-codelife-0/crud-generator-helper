@@ -1,0 +1,50 @@
+<?php
+namespace $NAMESPACE$;
+$CONTROLLER$
+use Illuminate\Http\Request;
+use App\Models\$MODEL$;$RELATION_MODEL$
+
+class $CLASS_NAME$Controller extends Controller
+{
+    public function index(){
+        $datas = $MODEL$::get();
+        return view('$PREFIX$$VIEW_FOLDER$.index', [
+            'datas' => $datas
+        ]);
+    }
+
+    public function add(Request $request){$RELATION_QUERY$
+        if($request->isMethod('post')){
+            $data = $MODEL$::create($request->all());
+            if($data){
+                return redirect()->route('$PREFIX_ROUTE$$ROUTE$.index');
+            }else{
+                return redirect()->route('$PREFIX_ROUTE$$ROUTE$.index');
+            }
+        }
+        return view('$PREFIX$$VIEW_FOLDER$.add'$ADD_RELATION$);
+    }
+
+    public function edit($id = null, Request $request){
+        $data = $MODEL$::findOrFail($id);$RELATION_QUERY$
+        if($request->isMethod('post')){
+            if($data->update($request->all())){
+                return redirect()->route('$PREFIX_ROUTE$$ROUTE$.index');
+            }else{
+                return redirect()->route('$PREFIX_ROUTE$$ROUTE$.index');
+            }
+        }
+        return view('$PREFIX$$VIEW_FOLDER$.edit', [
+            'data' => $data$EDIT_RELATION$
+        ]);
+    }
+
+    public function delete($id = null, Request $request){
+        $data = $MODEL$::findOrFail($id);
+        if($data->delete()){
+            return redirect()->route('$PREFIX_ROUTE$$ROUTE$.index');
+        }else{
+            return redirect()->route('$PREFIX_ROUTE$$ROUTE$.index');
+        }
+    }
+}
