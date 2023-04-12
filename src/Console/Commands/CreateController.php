@@ -13,7 +13,7 @@ use Codelife\CodelifeModelGeneratorHelper\Providers\ModelHelperServiceProvider;
 class CreateController extends Command
 {
     // Usage with prefix php artisan create:crud-controller Todo --prefix="Admin\User"
-    protected $signature = 'create:crud-controller {name} {--P|prefix=}';
+    protected $signature = 'create:crud-controller {name} {--P|prefix=} {--ajaj}';
     protected $description = 'Create a controller with initial crud operation logic';
     protected $files;
 
@@ -51,7 +51,11 @@ class CreateController extends Command
     }
 
     public function getStubPath(){
-        return ModelHelperServiceProvider::STUB_PATH.'create-controller.stub';
+        if($this->option('ajaj')){
+            return ModelHelperServiceProvider::STUB_PATH.'create-ajax-controller.stub';
+        }else{
+            return ModelHelperServiceProvider::STUB_PATH.'create-controller.stub';
+        }
     }
 
     public function getStubVariables(){

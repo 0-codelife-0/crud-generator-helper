@@ -6,9 +6,23 @@
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title')</title>
+    <link rel="shortcut icon" href="#">
+    <script src="{{ asset('jquery/jquery-3.6.4.min.js') }}"></script>
+    <script src="{{ asset('jquery/datatables/js/jquery.dataTable.min.js') }}"></script>
+    <script src="{{ asset('bootstrap-assets/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('bootstrap-assets/js/popper.min.js') }}"></script>
     <link rel="stylesheet" href="{{ asset('bootstrap-assets/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('jquery/datatables/css/jquery.dataTable.min.css') }}">
 </head>
 <body>
+    @if ($message = Session::get('message'))
+        <div class="alert alert-info">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <i class="material-icons">close</i>
+            </button>
+            <span>{{ $message }}</span>
+        </div>
+    @endif
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
@@ -23,8 +37,5 @@
             </div>
         </div>
     </div>
-    <script src="{{ asset('bootstrap-assets/js/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('bootstrap-assets/js/jquery-3.2.1.slim.min.js') }}"></script>
-    <script src="{{ asset('bootstrap-assets/js/popper.min.js') }}"></script>
 </body>
 </html>

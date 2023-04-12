@@ -1,0 +1,164 @@
+@extends('layout.app')
+@section('title', 'Table')
+@section('content')
+
+<div class="modal fade" id="modal">
+    <div class="modal-dialog">
+        <form action="" method="" id="form">
+            @csrf
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="modal-title"></h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    @csrf
+                    $INPUTS$
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" id="save-button"></button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<a href="#" class="btn btn-info float-right" id="add">Add New Data</a>
+<table id="datatable" class="table table-responsive table-hover">
+	<thead>
+        $HEADER$
+        <th>{{ __('Action') }}</th>
+	</thead>
+</table>
+
+<script>
+    $(function(){
+        var url = '';
+
+        var datatable_instance = $("#datatable").DataTable({
+            "order": [
+                [0, 'Asc']
+            ],
+            "ajax": {
+                url: '{{ route('$PREFIX$$ROUTE$.index') }}',
+                method: 'GET',
+                dataType: 'JSON',
+            },
+            "columns": [
+                $BODY$
+                {
+                    data: 'id',
+                    render: function(data, type, row) {
+                        return '<a data-id="' + row.id +
+                            '" title="Edit" style="cursor: pointer;" class="btn btn-primary edit">Edit</a> | ' +
+                            '<a data-id="' + row.id +
+                            '" title="Delete" style="cursor: pointer;" class="btn btn-danger delete">Delete</a>';
+                    }
+                }
+
+            ],
+
+        });
+
+        // Click Add
+        $(document).on('click', '#add', function() {
+            url = '{{ route('$PREFIX$$ROUTE$.add') }}';
+            $('#save-button').html('Save');
+            $('#modal-title').html('Add New Data');
+            $('#modal').modal('show');
+        });
+
+        // Click Edit
+        datatable_instance.on('click', '.edit', function(e) {
+            e.preventDefault();
+            var dataId = $(this).attr('data-id');
+            url = '{{ route('$PREFIX$$ROUTE$.edit') }}' + '/' + dataId;
+            $.ajax({
+                url: url,
+                method: 'GET',
+                dataType: 'JSON',
+                success: function(data, textStatus, jqXHR) {
+                    $JQUERY_INPUTS$
+                    $('#save-button').html('Update Changes');
+                    $('#modal-title').html('Edit Data');
+                    $('#modal').modal('show');
+                },
+                error: function(xhr, status, error) {
+                    alert(error);
+                }
+            });
+        });
+
+        // Form submit
+        $(document).on('submit', '#form', function(e) {
+            e.preventDefault();
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            var data = new FormData(this);
+            $.ajax({
+                url: url,
+                method: 'POST',
+                data: data,
+                type: 'json',
+                contentType: false,
+                processData: false,
+                cache: false,
+                success: function(data, textStatus, jqXHR) {
+                    $('#modal').modal('hide');
+                    alert(data.icon+' '+data.title);
+                    datatable_instance.ajax.reload();
+                },
+                error: function(xhr, status, error) {
+                    alert(error);
+                    datatable_instance.ajax.reload();
+                }
+            });
+        });
+
+        // Hidden modal
+        $('#modal').on('hidden.bs.modal', function() {
+            url = '';
+            $('#save-button').html('');
+            $('#modal-title').html('');
+            $('#form')[0].reset();
+        });
+
+        // Delete Function
+        datatable_instance.on('click', '.delete', function(e) {
+            e.preventDefault();
+            var dataId = $(this).attr('data-id');
+            url = '{{ route('$PREFIX$$ROUTE$.delete') }}' + '/' + dataId;
+
+            let text = "Delete this data?.";
+            if(confirm(text) == true) {
+                $.ajax({
+                    url: url,
+                    type: 'DELETE',
+                    method: 'DELETE',
+                    dataType: 'JSON',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(data, textStatus, jqXHR) {
+                        alert(data.icon+' '+data.title);
+                        datatable_instance.ajax.reload();
+                    },
+                    error: function(xhr, status, error) {
+                        alert(error);
+                        datatable_instance.ajax.reload();
+                    }
+                });
+            }else{
+                alert('Deletion cancelled...');
+            }
+
+        });
+    });
+</script>
+@endsection

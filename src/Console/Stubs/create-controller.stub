@@ -17,9 +17,9 @@ class $CLASS_NAME$Controller extends Controller
         if($request->isMethod('post')){
             $data = $MODEL$::create($request->all());
             if($data){
-                return redirect()->route('$PREFIX_ROUTE$$ROUTE$.index');
+                return redirect()->route('$PREFIX_ROUTE$$ROUTE$.index')->with('message', 'Data has been saved. ');
             }else{
-                return redirect()->route('$PREFIX_ROUTE$$ROUTE$.index');
+                return redirect()->route('$PREFIX_ROUTE$$ROUTE$.index')->with('message', 'Data could not be saved. ');
             }
         }
         return view('$PREFIX$$VIEW_FOLDER$.add'$ADD_RELATION$);
@@ -29,9 +29,9 @@ class $CLASS_NAME$Controller extends Controller
         $data = $MODEL$::findOrFail($id);$RELATION_QUERY$
         if($request->isMethod('post')){
             if($data->update($request->all())){
-                return redirect()->route('$PREFIX_ROUTE$$ROUTE$.index');
+                return redirect()->route('$PREFIX_ROUTE$$ROUTE$.index')->with('message', 'Data has been updated. ');
             }else{
-                return redirect()->route('$PREFIX_ROUTE$$ROUTE$.index');
+                return redirect()->route('$PREFIX_ROUTE$$ROUTE$.index')->with('message', 'Data could not be updated. ');
             }
         }
         return view('$PREFIX$$VIEW_FOLDER$.edit', [
@@ -42,9 +42,9 @@ class $CLASS_NAME$Controller extends Controller
     public function delete($id = null, Request $request){
         $data = $MODEL$::findOrFail($id);
         if($data->delete()){
-            return redirect()->route('$PREFIX_ROUTE$$ROUTE$.index');
+            return redirect()->route('$PREFIX_ROUTE$$ROUTE$.index')->with('message', 'Data has been deleted. ');
         }else{
-            return redirect()->route('$PREFIX_ROUTE$$ROUTE$.index');
+            return redirect()->route('$PREFIX_ROUTE$$ROUTE$.index')->with('message', 'Data could not be deleted. ');
         }
     }
 }

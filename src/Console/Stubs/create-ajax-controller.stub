@@ -1,0 +1,48 @@
+<?php
+namespace $NAMESPACE$;
+$CONTROLLER$
+use Illuminate\Http\Request;
+use App\Models\$MODEL$;$RELATION_MODEL$
+
+class $CLASS_NAME$Controller extends Controller
+{
+    public function index(Request $request){$RELATION_QUERY$
+        if($request->wantsJson()){
+            $datas = $MODEL$::get();
+            return response()->json(['data' => $datas]);
+        }
+        return view('$PREFIX$$VIEW_FOLDER$.index'$ADD_RELATION$);
+    }
+
+    public function add(Request $request){
+        if($request->isMethod('post')){
+            $data = $MODEL$::create($request->all());
+            if($data){
+                return response()->json(['title' =>'Data has been saved. ', 'icon' => 'success']);
+            }else{
+                return response()->json(['title' =>'Data could not be saved. ', 'icon' => 'error']);
+            }
+        }
+    }
+
+    public function edit($id = null, Request $request){
+        $data = $MODEL$::findOrFail($id);
+        if($request->isMethod('post')){
+            if($data->update($request->all())){
+                return response()->json(['title' =>'Data has been updated. ', 'icon' => 'success']);
+            }else{
+                return response()->json(['title' =>'Data could not be updated. ', 'icon' => 'error']);
+            }
+        }
+        return response()->json($data);
+    }
+
+    public function delete($id = null, Request $request){
+        $data = $MODEL$::findOrFail($id);
+        if($data->delete()){
+            return response()->json(['title' =>'Data has been deleted. ', 'icon' => 'success']);
+        }else{
+            return response()->json(['title' =>'Data could not be deleted. ', 'icon' => 'error']);
+        }
+    }
+}

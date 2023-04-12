@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Artisan;
 
 class CreateAll extends Command
 {
-    protected $signature = 'create:all {name} {--P|prefix=} {--M|hasMany=} {--O|hasOne=} {--B|belongsTo=}';
+    protected $signature = 'create:all {name} {--P|prefix=} {--M|hasMany=} {--O|hasOne=} {--B|belongsTo=} {--ajaj}';
     protected $description = 'Command to run all crud generator command';
 
     public function handle()
@@ -24,12 +24,14 @@ class CreateAll extends Command
         Artisan::call('create:crud-controller', [
             'name' => $this->argument('name'),
             '--prefix' => $this->option('prefix'),
+            '--ajaj' => $this->option('ajaj')
         ]);
         $this->line('<fg=black;bg=yellow>'.Artisan::output().'</>');
         $this->info('Creating View...');
         Artisan::call('create:crud-view', [
             'name' => $this->argument('name'),
             '--prefix' => $this->option('prefix'),
+            '--ajaj' => $this->option('ajaj')
         ]);
         $this->line('<fg=black;bg=yellow>'.Artisan::output().'</>');
         $this->info('Creating Route...');
