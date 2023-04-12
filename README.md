@@ -93,3 +93,7 @@ php artisan create:all `ModelName/TableName`
 ...If you want an Asynchronus Ajax And Json Controller, You can pass --ajaj option...
 (--ajaj)
 ```
+
+## You can donate me in the following platforms to show your support and appreciation
+Paypal Account: https://www.paypal.me/jexszcy
+Gcash Account: 09218356618
