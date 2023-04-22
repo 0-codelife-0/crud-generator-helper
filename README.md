@@ -31,10 +31,10 @@ Codelife\CodelifeModelGeneratorHelper\Providers\ModelHelperServiceProvider::clas
 ...
 ```
 
-### Publish commands with the below command
+<!-- ### Publish commands with the below command
 ```shell
 php artisan vendor:publish --provider="Codelife\CodelifeModelGeneratorHelper\Providers\ModelHelperServiceProvider" --tag="commands"
-```
+``` -->
 
 ### Publish assets with the below command
 ```shell

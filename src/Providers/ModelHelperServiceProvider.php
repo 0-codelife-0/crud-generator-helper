@@ -16,9 +16,9 @@ class ModelHelperServiceProvider extends ServiceProvider
     public const STUB_PATH = __DIR__.'/../Console/Stubs/';
 
     public function boot(): void{
-        $this->publishes([
-            __DIR__.'/../Console/Commands/' => app_path('/Console/Commands')
-        ], 'commands');
+        // $this->publishes([
+        //     __DIR__.'/../Console/Commands/' => app_path('/Console/Commands')
+        // ], 'commands');
         $this->publishes([
             __DIR__.'/../public/' => public_path()
         ], 'assets');
@@ -26,5 +26,15 @@ class ModelHelperServiceProvider extends ServiceProvider
         // php artisan vendor:publish --provider="Codelife\CodelifeModelGeneratorHelper\Providers\ModelHelperServiceProvider" --tag="commands"
         // Publish these assets tags
         // php artisan vendor:publish --provider="Codelife\CodelifeModelGeneratorHelper\Providers\ModelHelperServiceProvider" --tag="assets"
+    }
+
+    public function register(){
+        $this->commands([
+            \Codelife\CodelifeModelGeneratorHelper\Console\Commands\CreateAll::class,
+            \Codelife\CodelifeModelGeneratorHelper\Console\Commands\CreateModel::class,
+            \Codelife\CodelifeModelGeneratorHelper\Console\Commands\CreateController::class,
+            \Codelife\CodelifeModelGeneratorHelper\Console\Commands\CreateView::class,
+            \Codelife\CodelifeModelGeneratorHelper\Console\Commands\CreateRoute::class,
+        ]);
     }
 }
