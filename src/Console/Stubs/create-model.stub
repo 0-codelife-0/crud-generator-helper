@@ -9,6 +9,8 @@ class $CLASS_NAME$ extends Model
 {
     use HasFactory;
 
+    protected $table = '$TABLE$';
+
     $CONTENT$
 
 $RELATIONS$

@@ -1,12 +1,17 @@
 @extends('layout.app')
 @section('title', 'Edit')
 @section('content')
+<div class="card-header">
+    @yield('title')
+    <a href="{{ url()->previous() }}" class="btn btn-dark float-right rounded-0">Back</a>
+</div>
+<div class="card-body">
 <form action="{{ route('$PREFIX$$MODEL_ROUTE$.edit', $data->id) }}" method="POST">
-    <a class="btn btn-default float-right" href="{{ url()->previous() }}">Back</a>
     @csrf
     $INPUTS$
-    <a class="btn btn-dark" href="{{ url()->previous() }}">Back</a>
-    <button type="reset" class="btn btn-danger">Reset Form</button>
-    <button type="submit" class="btn btn-success">Update</button>
+    <button type="reset" class="btn btn-danger rounded-0">Reset Form</button>
+    <button type="submit" class="btn btn-dark rounded-0">Update</button>
 </form>
+</div>
+
 @endsection

@@ -1,8 +1,12 @@
 @extends('layout.app')
 @section('title', 'Table')
 @section('content')
-<a href="{{ route('$PREFIX$$ROUTE$.add') }}" class="btn btn-info float-right">Add New Data</a>
-<table class="table table-responsive table-hover">
+<div class="card-header">
+    @yield('title')
+    <a href="{{ route('$PREFIX$$ROUTE$.add') }}" class="btn btn-dark float-right rounded-0">Add New Data</a>
+</div>
+<div class="card-body">
+<table id="datatable" class="table table-responsive table-hover" style="width:100%">
 	<thead>
         $HEADER$
         <th>{{ __('Action') }}</th>
@@ -12,11 +16,20 @@
 			<tr>
 				$BODY$
 				<td>
-					<a href="{{ route('$PREFIX$$ROUTE$.edit', $data->id) }}" class="btn btn-warning">Edit</a>
-					<a href="{{ route('$PREFIX$$ROUTE$.delete', $data->id) }}" class="btn btn-danger">Delete</a>
+					<a href="{{ route('$PREFIX$$ROUTE$.edit', $data->id) }}" class="btn btn-dark rounded-0">Edit</a> |
+					<a href="{{ route('$PREFIX$$ROUTE$.delete', $data->id) }}" class="btn btn-dark rounded-0">Delete</a>
 				</td>
 			</tr>
 		@endforeach
 	</tbody>
 </table>
+</div>
+
+<script>
+    $(function(){
+        var datatable_instance = $("#datatable").DataTable({
+            responsive: true
+        });
+    });
+</script>
 @endsection

@@ -55,7 +55,8 @@ class CreateModel extends Command
             'NAMESPACE'         => 'App\\Models',
             'CLASS_NAME'        => $this->getSingularClassName($this->argument('name')),
             'CONTENT'           => $this->generateFillableField($this->getColumnsList($this->argument('name'))),
-            'RELATIONS'         => $this->getRelations($this->option('hasMany'), $this->option('hasOne'), $this->option('belongsTo'))
+            'RELATIONS'         => $this->getRelations($this->option('hasMany'), $this->option('hasOne'), $this->option('belongsTo')),
+            'TABLE'             => Str::snake(Pluralizer::plural($this->argument('name')))
         ];
     }
 

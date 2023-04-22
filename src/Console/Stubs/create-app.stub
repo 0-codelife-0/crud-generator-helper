@@ -11,8 +11,10 @@
     <script src="{{ asset('jquery/datatables/js/jquery.dataTable.min.js') }}"></script>
     <script src="{{ asset('bootstrap-assets/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('bootstrap-assets/js/popper.min.js') }}"></script>
+    <script src="{{ asset('jquery/datatables/js/dataTables.responsive.min.js') }}"></script>
     <link rel="stylesheet" href="{{ asset('bootstrap-assets/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('jquery/datatables/css/jquery.dataTable.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('jquery/datatables/css/responsive.dataTables.min.css') }}">
 </head>
 <body>
     @if ($message = Session::get('message'))
@@ -27,12 +29,7 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header">
-                        @yield('title')
-                    </div>
-                    <div class="card-body">
-                        @yield('content')
-                    </div>
+                    @yield('content')
                 </div>
             </div>
         </div>

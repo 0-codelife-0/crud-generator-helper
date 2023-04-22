@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="modal fade" id="modal">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
         <form action="" method="" id="form">
             @csrf
             <div class="modal-content">
@@ -18,21 +18,26 @@
                     $INPUTS$
                 </div>
                 <div class="modal-footer justify-content-between">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary" id="save-button"></button>
+                    <button type="button" class="btn btn-default rounded-0" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary rounded-0" id="save-button"></button>
                 </div>
             </div>
         </form>
     </div>
 </div>
 
-<a href="#" class="btn btn-info float-right" id="add">Add New Data</a>
-<table id="datatable" class="table table-responsive table-hover">
-	<thead>
-        $HEADER$
-        <th>{{ __('Action') }}</th>
-	</thead>
-</table>
+<div class="card-header">
+    @yield('title')
+    <a href="#" class="btn btn-dark rounded-0 float-right" id="add">Add New Data</a>
+</div>
+<div class="card-body">
+    <table id="datatable" class="table table-responsive table-hover" style="width:100%">
+        <thead>
+            $HEADER$
+            <th>{{ __('Action') }}</th>
+        </thead>
+    </table>
+</div>
 
 <script>
     $(function(){
@@ -52,15 +57,14 @@
                 {
                     data: 'id',
                     render: function(data, type, row) {
-                        return '<a data-id="' + row.id +
-                            '" title="Edit" style="cursor: pointer;" class="btn btn-primary edit">Edit</a> | ' +
-                            '<a data-id="' + row.id +
-                            '" title="Delete" style="cursor: pointer;" class="btn btn-danger delete">Delete</a>';
+                        return '<button type="button" data-id="' + row.id +
+                            '" title="Edit" style="cursor: pointer;" class="btn btn-dark rounded-0 edit">Edit</button> | ' +
+                            '<button type="button" data-id="' + row.id +
+                            '" title="Delete" style="cursor: pointer;" class="btn btn-dark rounded-0 delete">Delete</button>';
                     }
                 }
-
             ],
-
+            responsive: true,
         });
 
         // Click Add

@@ -123,7 +123,7 @@ class CreateView extends Command
             'BODY'         => $this->generateBody($this->getColumnsList($this->argument('name'))),
             'ROUTE'        => Str::kebab($this->getPluralModelName($this->argument('name'))),
             'PREFIX'       => ($this->option('prefix') != "" || $this->option('prefix') != null) ? str_replace('\\', '.', strtolower($this->option('prefix')).'.') : '',
-            'INPUTS'       => $this->getAddInputs($this->getColumnsList($this->argument('name'))),
+            'INPUTS'       => $this->getAjaxInputs($this->getColumnsList($this->argument('name'))),
             'JQUERY_INPUTS'=> $this->getJqueryInputs($this->getColumnsList($this->argument('name'))),
         ];
     }
@@ -314,6 +314,63 @@ class CreateView extends Command
         }
         return $inputs;
     }
+    protected function getAjaxInputs($columns){
+        $inputs = '';
+        $database = Str::snake(Pluralizer::plural($this->argument('name')));
+        foreach ($columns as $column) {
+            $columnType = DB::getSchemaBuilder()->getColumnType($database, $column);
+            if((!in_array($column, ['id', 'created_at', 'updated_at', 'deleted_at']))){
+                if(str_ends_with($column, '_id') != false){
+                    $model =  Str::camel(Pluralizer::plural(str_replace('_id', '', $column)));
+                    $inputs .= '<div class="form-group">'."\n\t\t\t\t";
+                    $inputs .= "\t\t".'<label for="'.$column.'">'.Str::title(str_replace('_', ' ', (Str::snake(Pluralizer::singular($column))))).'</label>'."\n\t\t\t\t";
+                    $inputs .= "\t\t".'<select name="'.$column.'" id="'.$column.'" class="form-control" required>
+                            <option value="">--Select '.Str::title(str_replace('_', ' ', (Str::snake(Pluralizer::singular($model))))).'--</option>
+                            @foreach ($'.$model.' as $'.Pluralizer::singular($model).')
+                                <option value="{{ $'.Pluralizer::singular($model).'->id }}">{{ $'.Pluralizer::singular($model).'->id }}</option>
+                            @endforeach
+                        </select>'."\n\t\t\t\t\t";
+                $inputs .= '</div>'."\n\t\t\t\t\t";
+                }else if($column == 'password'){
+                    $inputs .= '<div class="form-group">'."\n\t\t\t\t";
+                    $inputs .= "\t\t".'<label for="'.$column.'">'.Str::title(str_replace('_', ' ', (Str::snake(Pluralizer::singular($column))))).'</label>'."\n\t\t\t\t";
+                    $inputs .= "\t\t".'<input type="password" id="'.$column.'" name="'.$column.'" class="form-control" required>'."\n\t\t\t\t\t";
+                    $inputs .= '</div>'."\n\t\t\t\t\t";
+                }else if($columnType == 'date'){
+                    $inputs .= '<div class="form-group">'."\n\t\t\t\t";
+                    $inputs .= "\t\t".'<label for="'.$column.'">'.Str::title(str_replace('_', ' ', (Str::snake(Pluralizer::singular($column))))).'</label>'."\n\t\t\t\t";
+                    $inputs .= "\t\t".'<input type="date" id="'.$column.'" name="'.$column.'" class="form-control" required>'."\n\t\t\t\t\t";
+                    $inputs .= '</div>'."\n\t\t\t\t\t";
+                }else if($columnType == 'time'){
+                    $inputs .= '<div class="form-group">'."\n\t\t\t\t";
+                    $inputs .= "\t\t".'<label for="'.$column.'">'.Str::title(str_replace('_', ' ', (Str::snake(Pluralizer::singular($column))))).'</label>'."\n\t\t\t\t";
+                    $inputs .= "\t\t".'<input type="time" id="'.$column.'" name="'.$column.'" class="form-control" required>'."\n\t\t\t\t\t";
+                    $inputs .= '</div>'."\n\t\t\t\t\t";
+                }else if(in_array($columnType, $this->dateTime)){
+                    $inputs .= '<div class="form-group">'."\n\t\t\t\t";
+                    $inputs .= "\t\t".'<label for="'.$column.'">'.Str::title(str_replace('_', ' ', (Str::snake(Pluralizer::singular($column))))).'</label>'."\n\t\t\t\t";
+                    $inputs .= "\t\t".'<input type="datetime-local" id="'.$column.'" name="'.$column.'" class="form-control" required>'."\n\t\t\t\t\t";
+                    $inputs .= '</div>'."\n\t\t\t\t\t";
+                }else if(in_array($columnType, $this->text)){
+                    $inputs .= '<div class="form-group">'."\n\t\t\t\t";
+                    $inputs .= "\t\t".'<label for="'.$column.'">'.Str::title(str_replace('_', ' ', (Str::snake(Pluralizer::singular($column))))).'</label>'."\n\t\t\t\t";
+                    $inputs .= "\t\t".'<textarea id="'.$column.'" name="'.$column.'" class="form-control" required></textarea>'."\n\t\t\t\t\t";
+                    $inputs .= '</div>'."\n\t\t\t\t\t";
+                }else if(in_array($columnType, $this->numeric)){
+                    $inputs .= '<div class="form-group">'."\n\t\t\t\t";
+                    $inputs .= "\t\t".'<label for="'.$column.'">'.Str::title(str_replace('_', ' ', (Str::snake(Pluralizer::singular($column))))).'</label>'."\n\t\t\t\t";
+                    $inputs .= "\t\t".'<input type="number" id="'.$column.'" name="'.$column.'" class="form-control" required>'."\n\t\t\t\t\t";
+                    $inputs .= '</div>'."\n\t\t\t\t\t";
+                }else{
+                    $inputs .= '<div class="form-group">'."\n\t\t\t\t";
+                    $inputs .= "\t\t".'<label for="'.$column.'">'.Str::title(str_replace('_', ' ', (Str::snake(Pluralizer::singular($column))))).'</label>'."\n\t\t\t\t";
+                    $inputs .= "\t\t".'<input type="text" id="'.$column.'" name="'.$column.'" class="form-control" required>'."\n\t\t\t\t\t";
+                    $inputs .= '</div>'."\n\t\t\t\t\t";
+                }
+            }
+        }
+        return $inputs;
+    }
     protected function getJqueryInputs($columns){
         $inputs = '';
         $database = Str::snake(Pluralizer::plural($this->argument('name')));
@@ -330,7 +387,7 @@ class CreateView extends Command
     protected function generateHeader($columns){
         $data = '';
         foreach ($columns as $column) {
-            $data .= "<th>{{ __('".$column."') }}</th>\n\t\t";
+            $data .= "<th>{{ __('".$column."') }}</th>\n\t\t\t";
         }
         return $data;
     }
