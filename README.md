@@ -1,6 +1,6 @@
 # Helper package for Laravel
 
-## Installation
+## Installation:
 
 You can install this plugin into your Laravel application using [composer](https://getcomposer.org).
 
@@ -16,34 +16,34 @@ composer require codelife/codelife-model-generator-helper:dev-main
 #  OR
 composer require codelife/codelife-model-generator-helper:dev-master
 ```
-
-## This helper requires this plugin to work properly
+<!-- 
+## This helper automatically requires this plugin to work properly, but you can manually require it:
 ```shell
 composer require doctrine/dbal
-```
+``` -->
 
 
-### Load this in config/app.php
+<!-- ### Load this in config/app.php
 
 ```php
 ...
 Codelife\CodelifeModelGeneratorHelper\Providers\ModelHelperServiceProvider::class,
 ...
-```
+``` -->
 
 <!-- ### Publish commands with the below command
 ```shell
 php artisan vendor:publish --provider="Codelife\CodelifeModelGeneratorHelper\Providers\ModelHelperServiceProvider" --tag="commands"
 ``` -->
 
-### Publish assets with the below command
+### Publish assets for the default design with the below command:
 ```shell
 php artisan vendor:publish --provider="Codelife\CodelifeModelGeneratorHelper\Providers\ModelHelperServiceProvider" --tag="assets"
 ```
 
-## Usage
+## Usage:
 
-### Create view 
+### Create view:
 ```shell
 php artisan create:crud-view `ModelName/TableName`
 
@@ -53,7 +53,7 @@ php artisan create:crud-view `ModelName/TableName`
 (--ajaj)
 ```
 
-### Create controller 
+### Create controller: 
 ```shell
 php artisan create:crud-controller `ModelName/TableName`
 
@@ -63,7 +63,7 @@ php artisan create:crud-controller `ModelName/TableName`
 (--ajaj)
 ```
 
-### Create route 
+### Create route: 
 ```shell
 php artisan create:crud-route `ModelName/TableName`
 
@@ -71,7 +71,7 @@ php artisan create:crud-route `ModelName/TableName`
 (-P "Prefix\Name" | Prefix\Name) | (--prefix="Prefix\Name" )
 ```
 
-### Create model 
+### Create model: 
 ```shell
 php artisan create:model `ModelName/TableName`
 
@@ -81,7 +81,7 @@ php artisan create:model `ModelName/TableName`
 (-M "Table1/Table2," | Table1/Table2) | (--hasMany="Table1/Table2" )
 ```
 
-### Create Model, View, Controller and Route at once
+### Create Model, View, Controller and Route at once:
 ```shell
 php artisan create:all `ModelName/TableName`
 
@@ -94,6 +94,6 @@ php artisan create:all `ModelName/TableName`
 (--ajaj)
 ```
 
-## You can donate me in the following platforms to show your support and appreciation
+## You can donate me in the following platforms to show your support and appreciation:
 Paypal Account: https://www.paypal.me/jexszcy
 Gcash Account: 09218356618
